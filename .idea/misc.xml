@@ -5,9 +5,10 @@
       <map>
         <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/content_main.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/fragment_first.xml" value="0.26875" />
-        <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/fragment_second.xml" value="0.10361842105263158" />
+        <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/fragment_second.xml" value="0.22" />
         <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/produit_listview_header.xml" value="0.26875" />
         <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/produit_listview_item.xml" value="0.26875" />
+        <entry key="..\:/Users/philr/Documents/Ecole/Android_02/Labo2/app/src/main/res/layout/produit_new.xml" value="0.25" />
       </map>
     </option>
   </component>
