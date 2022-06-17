@@ -1,12 +1,20 @@
 package ca.philrousse.android02.labo1.data
 
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
 
 @Entity(tableName = "Produits")
-class Produit(_id: Int, nom: String, categ: String, prix: Double, qte: Int) {
+class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
 
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "Réf produit") val _id: Int = _id
+    @Ignore
+    constructor(nom: String, categ: String, prix: Double, qte: Int):
+            this(null,nom,categ, prix, qte)
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "Réf produit")
+    @NonNull
+    val _id: Int? = _id
         get() = field
 
     @ColumnInfo(name = "Nom du produit") var nom: String = nom
