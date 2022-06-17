@@ -10,8 +10,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="list_produit_header_produit">Produit</string>
-    <string name="list_produit_header_qte">Unité en stock</string>
-    <string name="list_produit_header_prix">Prix Unitaire</string>
+    <string name="list_produit_header_qte">Quantité</string>
+    <string name="list_produit_header_prix">Prix</string>
     <string name="mainactivity_fab">TODO</string>
     <string name="produit_field_nom">Nom du produit</string>
     <string name="produit_field_categ">Catégorie</string>

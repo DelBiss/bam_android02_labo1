@@ -39,6 +39,7 @@
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="@dimen/default_margin"
 
             app:layout_constraintEnd_toStartOf="@id/produit_prix"
             android:layout_marginEnd="@dimen/default_margin"
@@ -56,6 +57,7 @@
             android:layout_width="@dimen/produits_item_prix_width"
             android:layout_height="wrap_content"
 
+            android:layout_marginVertical="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:text="@string/list_produit_header_prix"
 
