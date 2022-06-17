@@ -18,7 +18,7 @@
         android:layout_marginHorizontal="@dimen/default_margin"
 
         android:layout_marginVertical="@dimen/default_margin"
-        android:text="@string/lbl_produit"
+        android:text="@string/list_produit_header_produit"
         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Overline"
 
 
@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toStartOf="@id/produit_prix"
             android:layout_marginEnd="@dimen/default_margin"
 
-            android:text="@string/lbl_qte"
+            android:text="@string/list_produit_header_qte"
 
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Overline"
             android:textAlignment="center"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginEnd="@dimen/default_margin"
-            android:text="@string/lbl_prix"
+            android:text="@string/list_produit_header_prix"
 
             android:textAlignment="viewEnd"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Overline"
