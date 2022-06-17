@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="produit" type="ca.philrousse.android02.labo1.data.Produit"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/produit_nom"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="@dimen/default_margin"
+
+
+            android:layout_marginTop="@dimen/default_margin"
+            android:ellipsize="start"
+            android:singleLine="true"
+
+
+            android:text="@{produit.nom}"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
+
+            app:layout_constraintEnd_toStartOf="@id/produit_qte"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Uncle Bob's Organic Dried Pears" />
+
+        <TextView
+            android:id="@+id/produit_categ"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="@dimen/default_margin"
+            android:text="@{produit.categ}"
+
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+            android:visibility="visible"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/produit_nom"
+            app:layout_constraintTop_toBottomOf="@id/produit_nom"
+            tools:text="Produits secs" />
+
+        <TextView
+            android:id="@+id/produit_qte"
+
+            android:layout_width="@dimen/produit_item_qte_width"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintEnd_toStartOf="@id/produit_prix"
+            android:layout_marginEnd="@dimen/default_margin"
+
+            android:text="@{Integer.toString(produit.qte)}"
+            tools:text="150"
+
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:textAlignment="center"
+            android:maxLines="1"
+        />
+
+        <TextView
+            android:id="@+id/produit_prix"
+
+            android:layout_width="@dimen/produits_item_prix_width"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/default_margin"
+
+            currencyAmount="@{produit.prix}"
+            tools:text="150.00 $"
+
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:textAlignment="viewEnd"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
