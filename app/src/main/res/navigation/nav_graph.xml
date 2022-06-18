@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/Produit_List"
-        android:name="ca.philrousse.android02.labo1.FirstFragment"
+        android:name="ca.philrousse.android02.labo1.fragment.ProduitListFragment"
         android:label="@string/fragment_label_produit"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/produit_fragment_list">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -18,9 +18,9 @@
     </fragment>
     <fragment
         android:id="@+id/Produit_NewProduit"
-        android:name="ca.philrousse.android02.labo1.SecondFragment"
+        android:name="ca.philrousse.android02.labo1.fragment.ProduitAddFragment"
         android:label="@string/fragment_label_nouveau_produit"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/produit_fragment_add">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

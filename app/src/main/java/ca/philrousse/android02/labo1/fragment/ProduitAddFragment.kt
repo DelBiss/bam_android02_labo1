@@ -1,14 +1,15 @@
-package ca.philrousse.android02.labo1
+package ca.philrousse.android02.labo1.fragment
 
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import ca.philrousse.android02.labo1.ProduitApplication
+import ca.philrousse.android02.labo1.R
 import ca.philrousse.android02.labo1.data.Produit
-import ca.philrousse.android02.labo1.databinding.FragmentSecondBinding
+import ca.philrousse.android02.labo1.databinding.ProduitFragmentAddBinding
 import ca.philrousse.android02.labo1.model.ProduitViewModel
 import ca.philrousse.android02.labo1.model.ProduitViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
@@ -17,9 +18,9 @@ import com.google.android.material.textfield.TextInputLayout
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class ProduitAddFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: ProduitFragmentAddBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -34,7 +35,7 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = ProduitFragmentAddBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
 
@@ -46,7 +47,7 @@ class SecondFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_new, menu)
+        inflater.inflate(R.menu.menu_produit_add, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

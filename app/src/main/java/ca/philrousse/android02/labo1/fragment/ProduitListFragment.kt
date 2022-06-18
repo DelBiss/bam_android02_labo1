@@ -1,4 +1,4 @@
-package ca.philrousse.android02.labo1
+package ca.philrousse.android02.labo1.fragment
 
 
 import android.graphics.Canvas
@@ -20,12 +20,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import ca.philrousse.android02.labo1.binding.setCurrencyAmount
+import ca.philrousse.android02.labo1.ProduitApplication
+import ca.philrousse.android02.labo1.R
+import ca.philrousse.android02.labo1.adapter.setCurrencyAmount
 import ca.philrousse.android02.labo1.data.Produit
-import ca.philrousse.android02.labo1.databinding.FragmentFirstBinding
+import ca.philrousse.android02.labo1.databinding.ProduitFragmentListBinding
 import ca.philrousse.android02.labo1.model.ProduitViewModel
 import ca.philrousse.android02.labo1.model.ProduitViewModelFactory
-import ca.philrousse.android02.labo1.view.ProduitAdapter
+import ca.philrousse.android02.labo1.adapter.ProduitAdapter
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
@@ -33,9 +35,9 @@ import kotlin.math.min
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class ProduitListFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: ProduitFragmentListBinding? = null
     private var total: Double = 0.0
     private var categ: Double = 0.0
 
@@ -50,7 +52,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = ProduitFragmentListBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
         hookRecycleView()
@@ -64,7 +66,7 @@ class FirstFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_list, menu)
+        inflater.inflate(R.menu.menu_produit_list, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
         val item: MenuItem = menu.findItem(R.id.spinner)

@@ -1,18 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" tools:ignore="Typos">Labo1</string>
+    <string name="app_name" tools:ignore="Typos">SQLite Produits</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="fragment_label_produit">First Fragment</string>
+    <string name="fragment_label_produit">Liste de produit</string>
     <string name="fragment_label_nouveau_produit">Nouveau Produit</string>
-    <string name="next">Next</string>
+    <!--<string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>-->
     <string name="list_produit_header_produit">Produit - Catégorie</string>
     <string name="list_produit_header_qte">Quantité</string>
     <string name="list_produit_header_prix">Prix</string>
-    <string name="mainactivity_fab">TODO</string>
+    <string name="mainactivity_fab">Ajouter produit</string>
     <string name="produit_new_field_nom">Nom du produit*</string>
     <string name="produit_new_field_categ">Catégorie*</string>
     <string name="produit_new_field_qte">Unité en stock*</string>

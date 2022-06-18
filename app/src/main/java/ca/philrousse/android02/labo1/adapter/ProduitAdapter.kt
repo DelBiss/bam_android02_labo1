@@ -1,4 +1,4 @@
-package ca.philrousse.android02.labo1.view
+package ca.philrousse.android02.labo1.adapter
 
 import android.view.LayoutInflater
 import android.view.View
