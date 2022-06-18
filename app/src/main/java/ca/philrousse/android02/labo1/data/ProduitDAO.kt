@@ -9,8 +9,14 @@ interface ProduitDAO {
     @Query("SELECT * FROM Produits")
     fun obtenirListeProduits():Flow<List<Produit>>
 
-    @Query("SELECT * FROM Produits WHERE cat = :categ")
+    @Query("SELECT * FROM Produits WHERE categ = :categ")
     fun obtenirListeProduitsParCategorie(categ:String):Flow<List<Produit>>
+
+    @Query("SELECT SUM(qte * prix) AS total FROM Produits")
+    fun obtenirValeurInventaire():Flow<TotalInventaire>
+
+    @Query("SELECT SUM(qte * prix) AS total FROM Produits WHERE categ = :categ")
+    fun obtenirValeurInventaireParCategorie(categ:String):Flow<TotalInventaire>
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insert(produit: Produit)

@@ -7,20 +7,27 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import ca.philrousse.android02.labo1.binding.setCurrencyAmount
 import ca.philrousse.android02.labo1.data.Produit
 import ca.philrousse.android02.labo1.databinding.FragmentFirstBinding
 import ca.philrousse.android02.labo1.model.ProduitViewModel
 import ca.philrousse.android02.labo1.model.ProduitViewModelFactory
 import ca.philrousse.android02.labo1.view.ProduitAdapter
+import kotlinx.coroutines.launch
+import kotlin.math.min
 
 
 /**
@@ -29,14 +36,15 @@ import ca.philrousse.android02.labo1.view.ProduitAdapter
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
+    private var total: Double = 0.0
+    private var categ: Double = 0.0
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val produitsViewModel: ProduitViewModel by activityViewModels {
         ProduitViewModelFactory((activity!!.application as ProduitApplication).repository)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,9 +52,8 @@ class FirstFragment : Fragment() {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
-
         setHasOptionsMenu(true)
-       hookRecycleView()
+        hookRecycleView()
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -62,22 +69,40 @@ class FirstFragment : Fragment() {
 
         val item: MenuItem = menu.findItem(R.id.spinner)
         val spinner = item.actionView as Spinner
-        val add = ArrayAdapter<String>(activity!!,android.R.layout.simple_spinner_item).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinner.adapter = adapter
+        val add =
+            ArrayAdapter<String>(activity!!, android.R.layout.simple_spinner_item).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Apply the adapter to the spinner
+                spinner.adapter = adapter
+            }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                produitsViewModel.categoryFilter.value = if (position == 0) {
+                    binding.viewCateg.visibility = View.GONE
+                    null
+                } else {
+                    binding.viewCateg.visibility = View.VISIBLE
+                    parent.getItemAtPosition(position) as String
+                }
+                Log.d("Spinner", "$position -> ${parent.getItemAtPosition(position)}")
+            }
+
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
         }
-
-
-        produitsViewModel.spinnerCategoriesListe.observe(viewLifecycleOwner){
+        produitsViewModel.spinnerCategoriesListe.observe(viewLifecycleOwner) {
             add.clear()
             add.addAll(it)
         }
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onDestroyView() {
@@ -85,7 +110,9 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 
-    private fun hookRecycleView(){
+    private fun hookRecycleView() {
+        binding.total = total
+        binding.categ = categ
 
         val produitAdapter = ProduitAdapter()
 
@@ -98,25 +125,48 @@ class FirstFragment : Fragment() {
         recyclerView.addItemDecoration(mDividerItemDecoration)
         recyclerView.adapter = produitAdapter
 
-        produitsViewModel.listeProduitsFiltered.observe(viewLifecycleOwner) {
-            Log.d("viewModel",it.toString())
-            it?.let {
-                if(it.isNotEmpty()) {
-                    produitAdapter.submitList(it as MutableList<Produit>)
-                } else {
-                    produitAdapter.submitList(null)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                produitsViewModel.totalInventaire.collect {
+                    Log.d("TotalInventaire", it.toString())
+                    setCurrencyAmount(binding.txtTotalValue, it)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                produitsViewModel.listeProduitsFiltered.collect {
+                    Log.d("viewModel", it.toString())
+                    it.let {
+                        if (it.isNotEmpty()) {
+                            produitAdapter.submitList(it as MutableList<Produit>)
+                        } else {
+                            produitAdapter.submitList(null)
+                        }
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                produitsViewModel.totalInventaireFiltered.collect {
+                    Log.d("totalInventaireFiltered", it.total.toString())
+                    setCurrencyAmount(binding.txtCategValue, it.total)
                 }
             }
         }
 
 
-        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.RIGHT) {
+        val myCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
 
             val trashBinIcon = resources.getDrawable(
                 R.drawable.ic_baseline_delete_forever_24,
                 null
             )
+
             // More code here
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -126,7 +176,10 @@ class FirstFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-                Log.d("Swipe","It Swipe -> ${produitAdapter.currentList[viewHolder.adapterPosition]}")
+                Log.d(
+                    "Swipe",
+                    "It Swipe -> ${produitAdapter.currentList[viewHolder.adapterPosition]}"
+                )
                 produitsViewModel.delete(produitAdapter.currentList[viewHolder.adapterPosition])
             }
 
@@ -139,22 +192,34 @@ class FirstFragment : Fragment() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                c.clipRect(0f, viewHolder.itemView.top.toFloat(),
-                    dX, viewHolder.itemView.bottom.toFloat())
+                c.clipRect(
+                    0f, viewHolder.itemView.top.toFloat(),
+                    dX, viewHolder.itemView.bottom.toFloat()
+                )
 
-                if(dX < viewHolder.itemView.width / 2)
-                    c.drawColor(Color.GRAY)
-                else
-                    c.drawColor(Color.RED)
+                val myHSLColor = FloatArray(3)
+                Color.colorToHSV(Color.RED, myHSLColor)
+                val cx = 0.6F
+                myHSLColor[1] = (min(dX / (viewHolder.itemView.width / 2), 1F) * cx) + (1 - cx)
+
+                myHSLColor[2] = (min(dX / (viewHolder.itemView.width / 2), 1F) * cx) + (1 - cx)
+                val myColor = Color.HSVToColor(myHSLColor)
+
+                Log.d(
+                    "Color",
+                    "R:${Color.red(myColor)}, G:${Color.green(myColor)}, B:${Color.blue(myColor)}"
+                )
+                c.drawColor(Color.HSVToColor(myHSLColor))
+
 
                 val textMargin = resources.getDimension(R.dimen.default_margin).toInt() * 2
 
-                val iconSize = viewHolder.itemView.height - (textMargin*2)
+                val iconSize = viewHolder.itemView.height - (textMargin * 2)
 
                 trashBinIcon.bounds = Rect(
                     textMargin,
                     viewHolder.itemView.top + textMargin,
-                    textMargin + iconSize ,//trashBinIcon.intrinsicWidth,
+                    textMargin + iconSize,//trashBinIcon.intrinsicWidth,
                     viewHolder.itemView.top + textMargin + iconSize
                 )
                 trashBinIcon.draw(c)

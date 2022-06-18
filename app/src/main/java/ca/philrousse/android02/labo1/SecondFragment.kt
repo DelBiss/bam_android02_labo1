@@ -11,8 +11,8 @@ import ca.philrousse.android02.labo1.data.Produit
 import ca.philrousse.android02.labo1.databinding.FragmentSecondBinding
 import ca.philrousse.android02.labo1.model.ProduitViewModel
 import ca.philrousse.android02.labo1.model.ProduitViewModelFactory
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -82,7 +82,7 @@ class SecondFragment : Fragment() {
         val editText = til.editText
 
         editText?.let {
-            
+
             it.setOnFocusChangeListener { view, b ->
                 Log.d("FocusListner", "${view.id.toString()} - ${b.toString()}")
                 if(!b){

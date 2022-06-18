@@ -3,18 +3,48 @@ package ca.philrousse.android02.labo1.model
 import androidx.lifecycle.*
 import ca.philrousse.android02.labo1.data.Produit
 import ca.philrousse.android02.labo1.data.ProduitsRepository
+import ca.philrousse.android02.labo1.data.TotalInventaire
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
 
-    var listeProduitsFiltered: LiveData<List<Produit>> =repository.listeProduits.asLiveData()
-        //repository.cat("Merci").asLiveData()
+    var categoryFilter = MutableStateFlow<String?>(null)
 
+    var listeProduitsFiltered:StateFlow<List<Produit>> = categoryFilter.flatMapLatest { categ ->
+        if(categ.isNullOrEmpty()){
+            repository.listeProduits
+        } else {
+            repository.cat(categ)
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        emptyList()
+    )
 
+    var totalInventaire = categoryFilter.flatMapLatest { categ ->
+            repository.totalInventaire(null)}.stateIn(
+        scope = viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        69.0
+    )
 
+    var totalInventaireFiltered:StateFlow<TotalInventaire> = categoryFilter.flatMapLatest { categ ->
+        if(categ.isNullOrEmpty()){
+            flow { emit(TotalInventaire(0.0)) }
+            //repository.totalInventaire(null)
+        } else {
+            repository.totalInventaire(categ)
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        TotalInventaire(96.0)
+    )
 
     val spinnerCategoriesListe: LiveData<Set<String>> = Transformations.map(repository.listeCategories){
         val liste = it.toSortedSet().toMutableList()

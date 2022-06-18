@@ -4,6 +4,8 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
 
+data class TotalInventaire(var total: Double)
+
 @Entity(tableName = "Produits")
 class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
 
@@ -17,23 +19,23 @@ class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
     val _id: Int? = _id
         get() = field
 
-    @ColumnInfo(name = "Nom du produit") var nom: String = nom
+    @ColumnInfo(name = "nom") var nom: String = nom
         get() = field
         set(value) {
             field = value
         }
 
-    @ColumnInfo(name = "cat") var categ: String = categ
+    @ColumnInfo(name = "categ") var categ: String = categ
         get() = field
         set(value) {
             field = value
         }
-    @ColumnInfo(name = "Prix unitaire") var prix: Double = prix
+    @ColumnInfo(name = "prix") var prix: Double = prix
         get() = field
         set(value) {
             field = value
         }
-    @ColumnInfo(name = "Unité en stock") var qte: Int = qte
+    @ColumnInfo(name = "qte") var qte: Int = qte
         get() = field
         set(value) {
             field = value
