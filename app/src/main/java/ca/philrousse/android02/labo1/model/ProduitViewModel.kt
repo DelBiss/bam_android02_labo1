@@ -3,15 +3,33 @@ package ca.philrousse.android02.labo1.model
 import androidx.lifecycle.*
 import ca.philrousse.android02.labo1.data.Produit
 import ca.philrousse.android02.labo1.data.ProduitsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
 
-    val listeProduits: LiveData<List<Produit>> = repository.listeProduits
-    val listeCategories: LiveData<Set<String>> = repository.listeCategories
+    var listeProduitsFiltered: LiveData<List<Produit>> =repository.listeProduits.asLiveData()
+        //repository.cat("Merci").asLiveData()
 
-    fun insert(produit: Produit) = viewModelScope.launch {
+
+
+
+    val spinnerCategoriesListe: LiveData<Set<String>> = Transformations.map(repository.listeCategories){
+        val liste = it.toSortedSet().toMutableList()
+        liste.add(0,"All Product")
+        return@map liste.toSet()
+    }
+
+
+
+    fun insert(produit: Produit) = CoroutineScope(Dispatchers.IO).launch {
         repository.insert(produit)
+    }
+
+    fun delete(produit: Produit) = CoroutineScope(Dispatchers.IO).launch {
+        repository.delete(produit)
     }
 }
 

@@ -23,7 +23,7 @@ class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
             field = value
         }
 
-    @ColumnInfo(name = "Catégorie") var categ: String = categ
+    @ColumnInfo(name = "cat") var categ: String = categ
         get() = field
         set(value) {
             field = value

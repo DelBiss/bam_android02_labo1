@@ -4,19 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".SecondFragment">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/produit_nom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_margin"
         android:layout_marginVertical="@dimen/default_margin"
-        android:hint="@string/produit_field_nom"
+        android:hint="@string/produit_new_field_nom"
         app:boxBackgroundMode="filled"
-        app:errorEnabled="false"
+        app:errorEnabled="true"
+        app:helperText="@string/helper_field_required"
         app:hintAnimationEnabled="true"
-    >
+
+
+        >
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,19 +30,22 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/produit_categ"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_margin"
         android:layout_marginVertical="@dimen/default_margin"
-        android:hint="@string/produit_field_categ"
+        android:hint="@string/produit_new_field_categ"
         app:boxBackgroundMode="filled"
-        app:errorEnabled="false"
+        app:errorEnabled="true"
+        app:helperText="@string/helper_field_required"
         app:hintAnimationEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            tools:ignore="TextContrastCheck"
             tools:text="Boissons" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,46 +55,52 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/produit_qte"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
             android:layout_marginVertical="@dimen/default_margin"
-            android:hint="@string/produit_field_qte"
+            android:hint="@string/produit_new_field_qte"
             app:boxBackgroundMode="filled"
-            app:errorEnabled="false"
+            app:errorEnabled="true"
+            app:helperText="@string/helper_field_required"
             app:hintAnimationEnabled="true"
-            app:layout_constraintEnd_toStartOf="@+id/textInputLayout2"
+            app:layout_constraintEnd_toStartOf="@+id/produit_prix"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="number"
+                tools:ignore="TextContrastCheck"
                 tools:text="150" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
+            android:id="@+id/produit_prix"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
             android:layout_marginVertical="@dimen/default_margin"
-            android:hint="@string/produit_field_prix"
+            android:hint="@string/produit_new_field_prix"
             app:boxBackgroundMode="filled"
-
             app:endIconMode="none"
+            app:errorEnabled="true"
+
+            app:helperText="@string/helper_field_required"
             app:hintAnimationEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout"
+            app:layout_constraintStart_toEndOf="@+id/produit_qte"
             app:layout_constraintTop_toTopOf="parent"
             app:suffixText="$">
 
             <com.google.android.material.textfield.TextInputEditText
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textAlignment="textEnd"
                 tools:text="1" />
         </com.google.android.material.textfield.TextInputLayout>

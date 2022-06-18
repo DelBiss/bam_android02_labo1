@@ -9,6 +9,8 @@ interface ProduitDAO {
     @Query("SELECT * FROM Produits")
     fun obtenirListeProduits():Flow<List<Produit>>
 
+    @Query("SELECT * FROM Produits WHERE cat = :categ")
+    fun obtenirListeProduitsParCategorie(categ:String):Flow<List<Produit>>
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insert(produit: Produit)
