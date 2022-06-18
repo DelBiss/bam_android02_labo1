@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SQLite Produits</string>
+    <string name="fragment_label_produit">Product List</string>
+    <string name="fragment_label_nouveau_produit">New Product</string>
+    <string name="list_produit_header_produit">Product - Category</string>
+    <string name="list_produit_header_qte">Quantity</string>
+    <string name="list_produit_header_prix">Price</string>
+    <string name="mainactivity_fab">Add a product</string>
+    <string name="produit_new_field_nom">Product Name*</string>
+    <string name="produit_new_field_categ">Category*</string>
+    <string name="produit_new_field_qte">Stock Quantity</string>
+    <string name="produit_new_field_prix">Unit Price</string>
+    <string name="error_field_required_empty">This field is required and cannot be empty</string>
+    <string name="helper_field_required">*Required</string>
+    <string name="action_save">Save</string>
+    <string name="prompt_inv_total">Inventory Total Value:</string>
+    <string name="prompt_categ">Category Inventory Total Value:</string>
+</resources>

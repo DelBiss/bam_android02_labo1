@@ -28,6 +28,7 @@ import ca.philrousse.android02.labo1.databinding.ProduitFragmentListBinding
 import ca.philrousse.android02.labo1.model.ProduitViewModel
 import ca.philrousse.android02.labo1.model.ProduitViewModelFactory
 import ca.philrousse.android02.labo1.adapter.ProduitAdapter
+import ca.philrousse.android02.labo1.data.TotalInventaire
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
@@ -87,10 +88,10 @@ class ProduitListFragment : Fragment() {
                 id: Long
             ) {
                 produitsViewModel.categoryFilter.value = if (position == 0) {
-                    binding.viewCateg.visibility = View.GONE
+                    //binding.viewCateg.visibility = View.GONE
                     null
                 } else {
-                    binding.viewCateg.visibility = View.VISIBLE
+                    //binding.viewCateg.visibility = View.VISIBLE
                     parent.getItemAtPosition(position) as String
                 }
                 Log.d("Spinner", "$position -> ${parent.getItemAtPosition(position)}")
@@ -113,8 +114,8 @@ class ProduitListFragment : Fragment() {
     }
 
     private fun hookRecycleView() {
-        binding.total = total
-        binding.categ = categ
+        binding.total = TotalInventaire(null)
+        binding.categ = TotalInventaire(null,true)
 
         val produitAdapter = ProduitAdapter()
 
@@ -131,7 +132,7 @@ class ProduitListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 produitsViewModel.totalInventaire.collect {
                     Log.d("TotalInventaire", it.toString())
-                    setCurrencyAmount(binding.txtTotalValue, it)
+                    binding.total = it
                 }
             }
         }
@@ -152,8 +153,8 @@ class ProduitListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 produitsViewModel.totalInventaireFiltered.collect {
-                    Log.d("totalInventaireFiltered", it.total.toString())
-                    setCurrencyAmount(binding.txtCategValue, it.total)
+                    Log.d("totalInventaireFiltered", it.toString())
+                    binding.categ = it
                 }
             }
         }
@@ -177,11 +178,6 @@ class ProduitListFragment : Fragment() {
             ): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-                Log.d(
-                    "Swipe",
-                    "It Swipe -> ${produitAdapter.currentList[viewHolder.adapterPosition]}"
-                )
                 produitsViewModel.delete(produitAdapter.currentList[viewHolder.adapterPosition])
             }
 
@@ -203,14 +199,8 @@ class ProduitListFragment : Fragment() {
                 Color.colorToHSV(Color.RED, myHSLColor)
                 val cx = 0.6F
                 myHSLColor[1] = (min(dX / (viewHolder.itemView.width / 2), 1F) * cx) + (1 - cx)
-
                 myHSLColor[2] = (min(dX / (viewHolder.itemView.width / 2), 1F) * cx) + (1 - cx)
-                val myColor = Color.HSVToColor(myHSLColor)
 
-                Log.d(
-                    "Color",
-                    "R:${Color.red(myColor)}, G:${Color.green(myColor)}, B:${Color.blue(myColor)}"
-                )
                 c.drawColor(Color.HSVToColor(myHSLColor))
 
 

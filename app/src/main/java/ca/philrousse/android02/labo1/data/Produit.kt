@@ -4,8 +4,6 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
 
-data class TotalInventaire(var total: Double)
-
 @Entity(tableName = "Produits")
 class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
 

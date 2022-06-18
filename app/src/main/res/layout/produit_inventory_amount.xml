@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable name="total" type="ca.philrousse.android02.labo1.data.TotalInventaire"/>
+        <variable name="categ" type="ca.philrousse.android02.labo1.data.TotalInventaire"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        tools:showIn="@layout/produit_fragment_list"
+        android:id="@+id/insert_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/colorPressedHighlight"
+        android:padding="@dimen/default_margin"
+        >
+
+        <include
+            android:id="@+id/view_Total"
+            layout="@layout/produit_inventory_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="@dimen/default_margin"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:totalInventaire="@{total}" />
+
+        <include
+            android:id="@+id/view_categ"
+            layout="@layout/produit_inventory_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/default_margin"
+
+            app:layout_constraintTop_toBottomOf="@id/view_Total"
+            bind:totalInventaire="@{categ}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

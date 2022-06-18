@@ -30,12 +30,12 @@ class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
             repository.totalInventaire(null)}.stateIn(
         scope = viewModelScope,
         SharingStarted.WhileSubscribed(5000),
-        69.0
+        TotalInventaire(null)
     )
 
     var totalInventaireFiltered:StateFlow<TotalInventaire> = categoryFilter.flatMapLatest { categ ->
         if(categ.isNullOrEmpty()){
-            flow { emit(TotalInventaire(0.0)) }
+            flow { emit(TotalInventaire(null,true)) }
             //repository.totalInventaire(null)
         } else {
             repository.totalInventaire(categ)
@@ -43,7 +43,7 @@ class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
     }.stateIn(
         scope = viewModelScope,
         SharingStarted.WhileSubscribed(5000),
-        TotalInventaire(96.0)
+        TotalInventaire(null, true)
     )
 
     val spinnerCategoriesListe: LiveData<Set<String>> = Transformations.map(repository.listeCategories){

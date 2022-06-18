@@ -10,9 +10,7 @@ class ProduitsRepository(private val produitDao: ProduitDAO) {
     val listeProduits: Flow<List<Produit>> = produitDao.obtenirListeProduits()
     fun cat(cate:String) = produitDao.obtenirListeProduitsParCategorie(cate)
 
-    fun totalInventaire(notUser:Any?):Flow<Double> = produitDao.obtenirValeurInventaire().map {
-        it.total
-    }
+    fun totalInventaire(notUser:Any?):Flow<TotalInventaire> = produitDao.obtenirValeurInventaire()
 
     fun totalInventaire(cate:String):Flow<TotalInventaire> = produitDao.obtenirValeurInventaireParCategorie(cate)
 
