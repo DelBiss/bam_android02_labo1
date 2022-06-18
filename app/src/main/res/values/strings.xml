@@ -20,4 +20,6 @@
     <string name="error_field_required_empty">Ce champs est requis et ne peut être vide</string>
     <string name="helper_field_required">*Requis</string>
     <string name="action_save">Enregistrer</string>
+    <string name="prompt_inv_total">Le montant total de l’inventaire est :</string>
+    <string name="prompt_categ">et pour la catégorie est :</string>
 </resources>
