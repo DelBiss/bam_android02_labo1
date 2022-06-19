@@ -1,5 +1,6 @@
 package ca.philrousse.android02.labo1.model
 
+import android.util.Log
 import androidx.lifecycle.*
 import ca.philrousse.android02.labo1.data.Produit
 import ca.philrousse.android02.labo1.data.ProduitsRepository
@@ -15,10 +16,11 @@ class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
     var categoryFilter = MutableStateFlow<String?>(null)
 
     var listeProduitsFiltered:StateFlow<List<Produit>> = categoryFilter.flatMapLatest { categ ->
+        Log.d("Update",categ.toString())
         if(categ.isNullOrEmpty()){
             repository.listeProduits
         } else {
-            repository.cat(categ)
+            repository.listeProduitsParCategorie(categ)
         }
     }.stateIn(
         scope = viewModelScope,
@@ -26,7 +28,7 @@ class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
         emptyList()
     )
 
-    var totalInventaire = categoryFilter.flatMapLatest { categ ->
+    var totalInventaire = categoryFilter.flatMapLatest {
             repository.totalInventaire(null)}.stateIn(
         scope = viewModelScope,
         SharingStarted.WhileSubscribed(5000),
@@ -46,16 +48,15 @@ class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
         TotalInventaire(null, true)
     )
 
-    val spinnerCategoriesListe: LiveData<Set<String>> = Transformations.map(repository.listeCategories){
-        val liste = it.toSortedSet().toMutableList()
-        liste.add(0,"All Product")
-        return@map liste.toSet()
+    val listeCategorie = repository.listeCategories.map {
+        it.toSortedSet()
     }
 
-
-
-    fun insert(produit: Produit) = CoroutineScope(Dispatchers.IO).launch {
-        repository.insert(produit)
+    fun insert(produit: Produit, callback: ((Long)->Unit)? = null) = CoroutineScope(Dispatchers.IO).launch {
+        val insertedId = repository.insert(produit)
+        callback?.let {
+            it(insertedId)
+        }
     }
 
     fun delete(produit: Produit) = CoroutineScope(Dispatchers.IO).launch {

@@ -8,14 +8,14 @@
         <variable name="total" type="ca.philrousse.android02.labo1.data.TotalInventaire"/>
         <variable name="categ" type="ca.philrousse.android02.labo1.data.TotalInventaire"/>
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        tools:showIn="@layout/produit_fragment_list"
         android:id="@+id/insert_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/colorPressedHighlight"
+        android:background="?attr/colorSecondary"
         android:padding="@dimen/default_margin"
-        >
+        tools:showIn="@layout/produit_fragment_list">
 
         <include
             android:id="@+id/view_Total"
@@ -36,10 +36,10 @@
             layout="@layout/produit_inventory_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="@dimen/default_margin"
 
             app:layout_constraintTop_toBottomOf="@id/view_Total"
             bind:totalInventaire="@{categ}" />

@@ -14,15 +14,16 @@
     tools:context=".fragment.ProduitListFragment">
 
     <include
-        layout="@layout/produit_inventory_amount"
         android:id="@+id/insert_total"
+        layout="@layout/produit_inventory_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+
+
         app:layout_constraintTop_toTopOf="parent"
-        bind:total="@{total}"
         bind:categ="@{categ}"
-        />
+        bind:total="@{total}" />
 
     <include
         android:id="@+id/header"

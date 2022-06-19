@@ -18,8 +18,11 @@ interface ProduitDAO {
     @Query("SELECT SUM(qte * prix) AS total, 1 as isCategory FROM Produits WHERE categ = :categ")
     fun obtenirValeurInventaireParCategorie(categ:String):Flow<TotalInventaire>
 
+    @Query("SELECT DISTINCT categ FROM Produits")
+    fun obtenirListeCategory():Flow<List<Categorie>>
+
     @Insert (onConflict = OnConflictStrategy.REPLACE)
-    fun insert(produit: Produit)
+    fun insert(produit: Produit):Long
 
     @Insert
     fun insertAll(vararg users: Produit)

@@ -16,4 +16,6 @@
     <string name="action_save">Save</string>
     <string name="prompt_inv_total">Inventory Total Value:</string>
     <string name="prompt_categ">Category Inventory Total Value:</string>
+    <string name="spinner_all">All Products</string>
+    <string name="toas_new_product">Product # %1$d have been saved</string>
 </resources>

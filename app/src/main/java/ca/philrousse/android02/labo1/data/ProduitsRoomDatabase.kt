@@ -26,7 +26,7 @@ abstract class ProduitsRoomDatabase:RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ProduitsRoomDatabase::class.java,
-                    "word_database"
+                    "bdproduits"
                 ).addCallback(ProduitsDatabaseCallback(scope)).build()
                 INSTANCE = instance
                 // return instance
@@ -51,7 +51,7 @@ abstract class ProduitsRoomDatabase:RoomDatabase() {
                 produitDao.deleteAll()
 
                 produitDao.insert(Produit(1,"Chai","Boissons", 90.0, 39))
-                produitDao.insert(Produit(2,"Chang","Merci", 95.0, 17))
+                produitDao.insert(Produit(2,"Chang","Boissons", 95.0, 17))
                 produitDao.insert(Produit(3,"Aniseed Syrup","Condiments", 50.0, 13))
                 produitDao.insert(Produit(4,"Chef Anton's Cajun Seasoning","Condiments", 110.0, 53))
                 produitDao.insert(Produit(5,"Chef Anton's Gumbo Mix","Condiments", 106.75, 39))

@@ -1,7 +1,7 @@
 package ca.philrousse.android02.labo1.fragment
 
 import android.os.Bundle
-import android.util.Log
+
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,49 +12,30 @@ import ca.philrousse.android02.labo1.data.Produit
 import ca.philrousse.android02.labo1.databinding.ProduitFragmentAddBinding
 import ca.philrousse.android02.labo1.model.ProduitViewModel
 import ca.philrousse.android02.labo1.model.ProduitViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
-
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class ProduitAddFragment : Fragment() {
 
     private var _binding: ProduitFragmentAddBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val produitsViewModel: ProduitViewModel by activityViewModels {
         ProduitViewModelFactory((activity!!.application as ProduitApplication).repository)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         _binding = ProduitFragmentAddBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-
-
-
         return binding.root
-
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu_produit_add, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_save ->{
                 save()
@@ -68,32 +49,24 @@ class ProduitAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        hookFocusListner(binding.produitNom)
-        hookFocusListner(binding.produitCateg)
-        hookFocusListner(binding.produitPrix)
-        hookFocusListner(binding.produitQte)
-
-        /*binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }*/
+        hookFocusListener(binding.produitNom)
+        hookFocusListener(binding.produitCateg)
+        hookFocusListener(binding.produitPrix)
+        hookFocusListener(binding.produitQte)
     }
 
-    private fun hookFocusListner(til: TextInputLayout){
-        val editText = til.editText
-
-        editText?.let {
-
-            it.setOnFocusChangeListener { view, b ->
-                Log.d("FocusListner", "${view.id.toString()} - ${b.toString()}")
+    private fun hookFocusListener(til: TextInputLayout){
+        til.editText?.let {
+            it.setOnFocusChangeListener { _, b ->
                 if(!b){
                     validateIsNotNull(til)
                 }
             }
         }
     }
+
     private fun validateIsNotNull(til: TextInputLayout):Boolean{
-        if(til.editText?.text.toString().isEmpty()){
+        if(getInputString(til).isEmpty()){
             til.error = getString(R.string.error_field_required_empty)
             return false
         }
@@ -110,20 +83,40 @@ class ProduitAddFragment : Fragment() {
         return isValid
     }
 
-    fun save(){
-        if(validate()){
-            produitsViewModel.insert(
-                Produit(
-                    binding.produitNom.editText!!.text.toString(),
-                    binding.produitCateg.editText!!.text.toString(),
-                    binding.produitPrix.editText!!.text.toString().toDouble(),
-                    binding.produitQte.editText!!.text.toString().toInt()
-                )
-            )
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
-
+    private fun getInputString(til:TextInputLayout):String{
+            return til.editText?.text.toString()
     }
+
+    private fun getProduct():Produit?{
+        if(validate()) {
+            return Produit(
+                getInputString(binding.produitNom),
+                getInputString(binding.produitCateg),
+                getInputString(binding.produitPrix).toDouble(),
+                getInputString(binding.produitQte).toInt()
+            )
+        }
+        return null
+    }
+
+    private fun save(){
+        if(validate()){
+            getProduct()?.let { newProduct ->
+                produitsViewModel.insert(newProduct){ savedId->
+                        saveCallback(savedId)
+                }
+                findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            }
+        }
+    }
+
+    private fun saveCallback(saveId:Long)  {
+        view?.let {
+            val snackbarString = it.context.resources.getString(R.string.toas_new_product,saveId)
+            Snackbar.make(it, snackbarString,Snackbar.LENGTH_LONG).show()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

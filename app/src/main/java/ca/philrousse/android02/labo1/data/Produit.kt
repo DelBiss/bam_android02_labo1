@@ -3,6 +3,9 @@ package ca.philrousse.android02.labo1.data
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
+import com.google.android.material.textfield.TextInputLayout
+
+data class Categorie(val categ: String)
 
 @Entity(tableName = "Produits")
 class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
@@ -10,6 +13,7 @@ class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
     @Ignore
     constructor(nom: String, categ: String, prix: Double, qte: Int):
             this(null,nom,categ, prix, qte)
+
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Réf produit")
