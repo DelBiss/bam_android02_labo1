@@ -3,6 +3,9 @@ package ca.philrousse.android02.labo1.data
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
+import com.google.android.material.textfield.TextInputLayout
+
+data class Categorie(val categ: String)
 
 @Entity(tableName = "Produits")
 class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
@@ -11,29 +14,30 @@ class Produit(_id: Int?, nom: String, categ: String, prix: Double, qte: Int) {
     constructor(nom: String, categ: String, prix: Double, qte: Int):
             this(null,nom,categ, prix, qte)
 
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Réf produit")
     @NonNull
     val _id: Int? = _id
         get() = field
 
-    @ColumnInfo(name = "Nom du produit") var nom: String = nom
+    @ColumnInfo(name = "nom") var nom: String = nom
         get() = field
         set(value) {
             field = value
         }
 
-    @ColumnInfo(name = "cat") var categ: String = categ
+    @ColumnInfo(name = "categ") var categ: String = categ
         get() = field
         set(value) {
             field = value
         }
-    @ColumnInfo(name = "Prix unitaire") var prix: Double = prix
+    @ColumnInfo(name = "prix") var prix: Double = prix
         get() = field
         set(value) {
             field = value
         }
-    @ColumnInfo(name = "Unité en stock") var qte: Int = qte
+    @ColumnInfo(name = "qte") var qte: Int = qte
         get() = field
         set(value) {
             field = value

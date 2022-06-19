@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SecondFragment">
+    tools:context=".fragment.ProduitAddFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/produit_nom"

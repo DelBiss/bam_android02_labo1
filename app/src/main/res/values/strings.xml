@@ -1,18 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" tools:ignore="Typos">Labo1</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name" tools:ignore="Typos">SQLite Produits</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="fragment_label_produit">First Fragment</string>
+    <string name="fragment_label_produit">Liste de produit</string>
     <string name="fragment_label_nouveau_produit">Nouveau Produit</string>
-    <string name="next">Next</string>
+    <!--<string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>-->
     <string name="list_produit_header_produit">Produit - Catégorie</string>
     <string name="list_produit_header_qte">Quantité</string>
     <string name="list_produit_header_prix">Prix</string>
-    <string name="mainactivity_fab">TODO</string>
+    <string name="mainactivity_fab">Ajouter un produit</string>
     <string name="produit_new_field_nom">Nom du produit*</string>
     <string name="produit_new_field_categ">Catégorie*</string>
     <string name="produit_new_field_qte">Unité en stock*</string>
@@ -20,4 +19,8 @@
     <string name="error_field_required_empty">Ce champs est requis et ne peut être vide</string>
     <string name="helper_field_required">*Requis</string>
     <string name="action_save">Enregistrer</string>
+    <string name="prompt_inv_total">Le montant total de l’inventaire est :</string>
+    <string name="prompt_categ">Le montant total pour la catégorie est :</string>
+    <string name="spinner_all">Tous les produits</string>
+    <string name="toas_new_product">Produit # %1$d a été bien enregistré</string>
 </resources>
