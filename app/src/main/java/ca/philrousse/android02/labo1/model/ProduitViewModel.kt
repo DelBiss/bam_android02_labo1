@@ -8,9 +8,11 @@ import ca.philrousse.android02.labo1.data.TotalInventaire
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class ProduitViewModel(private val repository: ProduitsRepository):ViewModel() {
 
     var categoryFilter = MutableStateFlow<String?>(null)
